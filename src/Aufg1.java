@@ -44,8 +44,6 @@ public class Aufg1 {
 			besteAusgabe[0] = aktAusgabe;
 		}
 
-		
 		return false;
 	}
-
 }
