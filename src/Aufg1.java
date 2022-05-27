@@ -15,7 +15,7 @@ public class Aufg1 {
 		
 	}
 	
-	public static boolean loesungFinden(int besteAnzahl, String[] besteAusgabe, int eingabe, int[] muenzen, int index, int anzahlMuenzen, int carry) {
+	public static boolean loesungFinden(int besteAnzahl, String[] besteAusgabe, int eingabe, int[] muenzen, int index, int anzahlMuenzen, int carry, int carryAnzahl) {
 		String aktAusgabe;
 		int aktAnzahl;
 		int sum;
@@ -23,6 +23,9 @@ public class Aufg1 {
 		if(muenzen[index]*anzahlMuenzen+carry > eingabe) {
 			return false;
 		}
+
+		aktAnzahl = carryAnzahl;
+
 		return false;
 	}
 
