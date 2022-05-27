@@ -7,21 +7,22 @@ public class Aufg1 {
 		String[] besteAusgabe = new String[1];
 		int[] muenzen = {1,5,11};
 		int eingabe;
+		int index = 0;
+		int anzahlMuenzen = 1;
+		int carry = 0;
 		
 		
 		
 	}
 	
-	public static boolean loesungFinden(int besteAnzahl, String[] besteAusgabe, int eingabe, int[] muenzen, int index, int anzahlMuenzen) {
+	public static boolean loesungFinden(int besteAnzahl, String[] besteAusgabe, int eingabe, int[] muenzen, int index, int anzahlMuenzen, int carry) {
 		String aktAusgabe;
 		int aktAnzahl;
 		int sum;
 		
-		if(muenzen[index]*anzahlMuenzen > eingabe) {
+		if(muenzen[index]*anzahlMuenzen+carry > eingabe) {
 			return false;
 		}
-
-		
 		return false;
 	}
 
