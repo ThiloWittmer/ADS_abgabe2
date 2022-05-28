@@ -4,6 +4,7 @@ public class Aufg2 {
     public static void main(String[] args) {
         int x,y;
         //funktion add hinzufuegen
+        //funktion erzeugen
     }
 
     public int inc(int x) {
