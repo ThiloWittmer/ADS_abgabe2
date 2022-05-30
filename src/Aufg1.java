@@ -4,7 +4,7 @@ public class Aufg1 {
 
 	public static void main(String[] args) {
 		int[] besteAnzahl = new int[1];
-		String[] besteAusgabe = {"", ""}; //[0] ist beste und [1] ist carry
+		String[] ausgaben = {"", "", ""}; //[0] ist beste und [1] ist carry und [2] is aktuelle Ausgabe
 		int[] muenzen = {1,2,5,10,20,50};
 		int eingabe = 0;
 		int index = muenzen.length-1;
@@ -34,31 +34,27 @@ public class Aufg1 {
 		input.close();
 		besteAnzahl[0] = eingabe;
 
-		loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, anzahlMuenzen, index, carry, carryAnzahl);
+		loesungFinden(besteAnzahl, ausgaben, eingabe, muenzen, anzahlMuenzen, index, carry, carryAnzahl);
 
-		System.out.println("Beste Lösung: " + besteAusgabe[0]);
+		System.out.println("Beste Lösung: " + ausgaben[0]);
 		System.out.println("Mit " + besteAnzahl[0] + " Münzen.");
 
 	}
 	
-	public static boolean loesungFinden(int[] besteAnzahl, String[] besteAusgabe, int eingabe, int[] muenzen, int anzahlMuenzen, int index, int carry, int carryAnzahl) {
-		String aktAusgabe;
+	public static boolean loesungFinden(int[] besteAnzahl, String[] ausgaben, int eingabe, int[] muenzen, int anzahlMuenzen, int index, int carry, int carryAnzahl) {
 		int aktAnzahl;
 		int sum;
 		
+		//wenn die Eingabe kleiner als die zweitkleinste Münze ist, wird direkt der greedy ausgeführt
 		if (eingabe < muenzen[1]) {
-			besteAnzahl[0] = 0;
 			sum = 0;
-			while ((eingabe - sum) >= muenzen[0]) {
-				sum += muenzen[0];
-				besteAusgabe[0] += muenzen[0] + " + ";
-				besteAnzahl[0]++;
-			}
+			besteAnzahl[0] = greedy(1, (eingabe - sum), muenzen, ausgaben);
+			ausgaben[0] = ausgaben[2];
 			return true;
 		}
 
 		if(index > 1){
-			loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, 0, index-1, carry, carryAnzahl);
+			loesungFinden(besteAnzahl, ausgaben, eingabe, muenzen, 0, index-1, carry, carryAnzahl);
 		}
 
 		if(muenzen[index]+carry > eingabe) {
@@ -70,33 +66,40 @@ public class Aufg1 {
 		switch(anzahlMuenzen){
 			case 0:
 				sum = carry;
-				aktAusgabe = besteAusgabe[1];
+				ausgaben[2] = ausgaben[1];
 			break;
 			default: 
 				sum = muenzen[index] + carry;
-				aktAusgabe = besteAusgabe[1] + muenzen[index] + " + ";
+				ausgaben[2] = ausgaben[1] + muenzen[index] + " + ";
 				carry = sum;
-				besteAusgabe[1] = aktAusgabe;
+				ausgaben[1] = ausgaben[2];
 		}
 
-		for(int i = index-1; i >= 0; i--) {
-			while((eingabe - sum) >= muenzen[i]) {
-				sum += muenzen[i];
-				aktAusgabe += muenzen[i] + " + ";
-				aktAnzahl++;
-			}
-		}
+		aktAnzahl += greedy(index, (eingabe - sum), muenzen, ausgaben);
 
 		if(aktAnzahl < besteAnzahl[0]){
 			besteAnzahl[0] = aktAnzahl;
-			besteAusgabe[0] = aktAusgabe;
+			ausgaben[0] = ausgaben[2];
 		}
 
-		if (loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, anzahlMuenzen+1, index, carry, carryAnzahl+1)) {
-			besteAusgabe[1] = "";
+		if (loesungFinden(besteAnzahl, ausgaben, eingabe, muenzen, anzahlMuenzen+1, index, carry, carryAnzahl+1)) {
+			ausgaben[1] = "";
 			return true;
 		}
 
 		return false;
+	}
+
+	public static int greedy(int index, int value, int[] muenzen, String[] ausgabe) {
+		int anzahl = 0;
+		int sum = 0;
+		for(int i = index-1; i >= 0; i--) {
+			while((value-sum) >= muenzen[i]) {
+				sum += muenzen[i];
+				ausgabe[2] += muenzen[i] + " + ";
+				anzahl++;
+			}
+		}
+		return anzahl;
 	}
 }
