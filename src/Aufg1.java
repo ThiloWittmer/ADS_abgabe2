@@ -53,10 +53,12 @@ public class Aufg1 {
 			return true;
 		}
 
+		//ruft Methode rekursiv bis zur zweitkleinsten Münze auf, um dann die Münze Schritt für Schritt zu erhöhen
 		if(index > 1){
 			loesungFinden(besteAnzahl, ausgaben, eingabe, muenzen, 0, index-1, carry, carryAnzahl);
 		}
 
+		//gibt true zurück, wenn die maximale Anzahl der aktuellen Münze für die aktuelle Eingabe erreicht wurde
 		if(muenzen[index]+carry > eingabe) {
 			return true;
 		}
@@ -77,11 +79,13 @@ public class Aufg1 {
 
 		aktAnzahl += greedy(index, (eingabe - sum), muenzen, ausgaben);
 
+		//Vergleich zur bisher besten Variante
 		if(aktAnzahl < besteAnzahl[0]){
 			besteAnzahl[0] = aktAnzahl;
 			ausgaben[0] = ausgaben[2];
 		}
 
+		//wenn true backtracken zur nächst größeren Münze und dessen Anzahl Schritt für Schritt erhöhen
 		if (loesungFinden(besteAnzahl, ausgaben, eingabe, muenzen, anzahlMuenzen+1, index, carry, carryAnzahl+1)) {
 			ausgaben[1] = "";
 			return true;
@@ -90,6 +94,14 @@ public class Aufg1 {
 		return false;
 	}
 
+	/***
+	 * Greedy Algorithmus
+	 * @param index alle Münzen unter diesem index werden beachtet
+	 * @param value Wert der erreicht werden soll
+	 * @param muenzen arr der verfügbaren Münzen
+	 * @param ausgabe erweitert den aktuellen Ausgabe-String 
+	 * @return Anzahl der verwendeten Münzen
+	*/
 	public static int greedy(int index, int value, int[] muenzen, String[] ausgabe) {
 		int anzahl = 0;
 		int sum = 0;
