@@ -5,16 +5,32 @@ public class Aufg1 {
 	public static void main(String[] args) {
 		int[] besteAnzahl = new int[1];
 		String[] besteAusgabe = {"", ""}; //[0] ist beste und [1] ist carry
-		int[] muenzen = {1,5,11};
-		int eingabe;
+		int[] muenzen = {1,2,5,10,20,50};
+		int eingabe = 0;
 		int index = muenzen.length-1;
 		int anzahlMuenzen = 0;
 		int carry = 0;
 		int carryAnzahl = 0;
 		Scanner input = new Scanner(System.in);
+		boolean isValidNumber;
 
-		System.out.println("Eingabe: ");
-		eingabe = input.nextInt();
+		System.out.println("Eingabe des Wechselgeldwertes (Ganze Zahl zwischen 1 und 99):");
+
+		do {
+			if (input.hasNextInt()) {
+				eingabe = input.nextInt();
+				if ((eingabe < 1 || eingabe > 99)) {
+					System.out.println("Bitte eine Zahl zwischen 1 und 99 eingeben:");
+					isValidNumber = false;
+				} else isValidNumber = true;
+			} else {
+				System.out.println("Bitte eine Zahl eingeben:");
+				isValidNumber = false;
+				input.next();
+			}
+
+		} while (!isValidNumber);
+		
 		input.close();
 		besteAnzahl[0] = eingabe;
 
@@ -40,7 +56,7 @@ public class Aufg1 {
 			}
 			return true;
 		}
-		
+
 		if(index > 1){
 			loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, 0, index-1, carry, carryAnzahl);
 		}
