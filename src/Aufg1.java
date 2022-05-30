@@ -15,6 +15,7 @@ public class Aufg1 {
 
 		System.out.println("Eingabe: ");
 		eingabe = input.nextInt();
+		input.close();
 		besteAnzahl[0] = eingabe;
 
 		loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, anzahlMuenzen, index, carry, carryAnzahl);
@@ -28,6 +29,17 @@ public class Aufg1 {
 		String aktAusgabe;
 		int aktAnzahl;
 		int sum;
+		
+		if (eingabe < muenzen[1]) {
+			besteAnzahl[0] = 0;
+			sum = 0;
+			while ((eingabe - sum) >= muenzen[0]) {
+				sum += muenzen[0];
+				besteAusgabe[0] += muenzen[0] + " + ";
+				besteAnzahl[0]++;
+			}
+			return true;
+		}
 		
 		if(index > 1){
 			loesungFinden(besteAnzahl, besteAusgabe, eingabe, muenzen, 0, index-1, carry, carryAnzahl);
